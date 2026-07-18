@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/emprestimos
+    username: emprestimos
+    password: emprestimos123
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    br.com.empresa.emprestimos: DEBUG
