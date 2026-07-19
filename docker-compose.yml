@@ -1,0 +1,22 @@
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: emprestimos-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: emprestimos
+      POSTGRES_USER: emprestimos
+      POSTGRES_PASSWORD: emprestimos123
+    ports:
+      - "5432:5432"
+    volumes:
+      - emprestimos_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U emprestimos"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  emprestimos_postgres_data:
