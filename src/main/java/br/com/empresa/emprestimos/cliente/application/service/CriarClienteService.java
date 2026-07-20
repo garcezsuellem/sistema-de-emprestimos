@@ -1,7 +1,7 @@
 package br.com.empresa.emprestimos.cliente.application.service;
 
 import br.com.empresa.emprestimos.cliente.application.dto.ClienteDTO;
-import br.com.empresa.emprestimos.cliente.application.dto.CriarClienteRequestDTO;
+import br.com.empresa.emprestimos.cliente.application.dto.CriarClienteRequest;
 import br.com.empresa.emprestimos.cliente.application.mapper.ClienteMapper;
 import br.com.empresa.emprestimos.cliente.domain.entity.Cliente;
 import br.com.empresa.emprestimos.cliente.domain.repository.ClienteRepository;
@@ -23,7 +23,7 @@ public class CriarClienteService {
         this.clienteMapper = clienteMapper;
     }
 
-    public ClienteDTO executar(CriarClienteRequestDTO request) {
+    public ClienteDTO executar(CriarClienteRequest request) {
         if (!CpfValidator.isValid(request.getCpf())) {
             throw new BusinessRuleViolationException("CPF inválido: " + request.getCpf());
         }

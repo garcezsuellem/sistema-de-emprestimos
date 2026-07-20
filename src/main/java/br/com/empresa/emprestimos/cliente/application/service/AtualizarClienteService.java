@@ -1,7 +1,7 @@
 package br.com.empresa.emprestimos.cliente.application.service;
 
 import br.com.empresa.emprestimos.cliente.application.dto.AtualizarClienteRequest;
-import br.com.empresa.emprestimos.cliente.application.dto.AtualizarClienteRequestDTO;
+import br.com.empresa.emprestimos.cliente.application.dto.AtualizarClienteRequest;
 import br.com.empresa.emprestimos.cliente.application.dto.ClienteDTO;
 import br.com.empresa.emprestimos.cliente.application.mapper.ClienteMapper;
 import br.com.empresa.emprestimos.cliente.domain.entity.Cliente;
@@ -24,7 +24,7 @@ public class AtualizarClienteService {
         this.clienteMapper = clienteMapper;
     }
 
-    public ClienteDTO executar(UUID id, AtualizarClienteRequestDTO request) {
+    public ClienteDTO executar(UUID id, AtualizarClienteRequest request) {
         Cliente cliente = clienteRepository.buscarPorId(id)
                 .orElseThrow(() -> new NotFoundException("Cliente", id));
 
