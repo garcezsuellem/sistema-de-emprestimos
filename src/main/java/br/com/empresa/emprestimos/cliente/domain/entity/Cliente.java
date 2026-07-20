@@ -61,6 +61,11 @@ public class Cliente {
     public boolean podeContratarEmprestimo() {
         return this.situacao == SituacaoCliente.ATIVO;
     }
+    public void atualizarDados(String nome, String email, String telefone) {
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+    }
 
     public UUID getId() {
         return id;

@@ -49,4 +49,26 @@ public class ClienteMapper {
                 .uf(endereco.getUf())
                 .build();
     }
+    public DadosFinanceirosCliente toEntity(DadosFinanceirosClienteDTO dto) {
+        return new DadosFinanceirosCliente(
+                dto.getClienteId(),
+                dto.getRendaMensal(),
+                dto.getOutrasRendas(),
+                dto.getOcupacao(),
+                dto.getEmpregador()
+        );
+    }
+
+    public EnderecoCliente toEntity(EnderecoClienteDTO dto) {
+        return new EnderecoCliente(
+                dto.getClienteId(),
+                dto.getCep(),
+                dto.getLogradouro(),
+                dto.getNumero(),
+                dto.getComplemento(),
+                dto.getBairro(),
+                dto.getCidade(),
+                dto.getUf()
+        );
+    }
 }
