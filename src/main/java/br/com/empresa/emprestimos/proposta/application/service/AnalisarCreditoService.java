@@ -69,4 +69,11 @@ public class AnalisarCreditoService {
         }
         return ResultadoAnalise.RECUSADO;
     }
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    public AnaliseCreditoDTO buscarPorPropostaId(UUID propostaId) {
+        AnaliseCredito analise = analiseCreditoRepository.buscarPorPropostaId(propostaId)
+                .orElseThrow(() -> new NotFoundException("AnaliseCredito", propostaId));
+
+        return propostaMapper.toDTO(analise);
+    }
 }
