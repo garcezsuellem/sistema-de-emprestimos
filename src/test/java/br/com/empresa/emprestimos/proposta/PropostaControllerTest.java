@@ -1,12 +1,12 @@
 package br.com.empresa.emprestimos.proposta;
 
+import br.com.empresa.emprestimos.proposta.application.SimularPropostaService;
 import br.com.empresa.emprestimos.proposta.application.dto.PropostaDTO;
 import br.com.empresa.emprestimos.proposta.application.service.AnalisarCreditoService;
 import br.com.empresa.emprestimos.proposta.application.service.AprovarPropostaService;
 import br.com.empresa.emprestimos.proposta.application.service.BuscarPropostaService;
 import br.com.empresa.emprestimos.proposta.application.service.CriarPropostaService;
 import br.com.empresa.emprestimos.proposta.application.service.RecusarPropostaService;
-import br.com.empresa.emprestimos.proposta.domain.service.CalculadoraEmprestimo;
 import br.com.empresa.emprestimos.proposta.web.controller.PropostaController;
 import br.com.empresa.emprestimos.shared.enums.SituacaoProposta;
 import br.com.empresa.emprestimos.shared.exception.NotFoundException;
@@ -18,6 +18,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import br.com.empresa.emprestimos.proposta.application.SimularPropostaService;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -51,7 +52,7 @@ class PropostaControllerTest {
     private AnalisarCreditoService analisarCreditoService;
 
     @MockitoBean
-    private CalculadoraEmprestimo calculadoraEmprestimo;
+    private SimularPropostaService simularPropostaService;
 
     @Test
     void deveCriarPropostaComDadosValidos() throws Exception {
