@@ -1,5 +1,6 @@
 package br.com.empresa.emprestimos.proposta.web.controller;
 
+import br.com.empresa.emprestimos.proposta.application.SimularPropostaService;
 import br.com.empresa.emprestimos.proposta.application.dto.AnaliseCreditoDTO;
 import br.com.empresa.emprestimos.proposta.application.dto.PropostaDTO;
 import br.com.empresa.emprestimos.proposta.application.service.AnalisarCreditoService;
@@ -34,20 +35,20 @@ public class PropostaController {
     private final AprovarPropostaService aprovarPropostaService;
     private final RecusarPropostaService recusarPropostaService;
     private final AnalisarCreditoService analisarCreditoService;
-    private final CalculadoraEmprestimo calculadoraEmprestimo;
+    private final SimularPropostaService simularPropostaService;
 
     public PropostaController(CriarPropostaService criarPropostaService,
                               BuscarPropostaService buscarPropostaService,
                               AprovarPropostaService aprovarPropostaService,
                               RecusarPropostaService recusarPropostaService,
                               AnalisarCreditoService analisarCreditoService,
-                              CalculadoraEmprestimo calculadoraEmprestimo) {
+                              SimularPropostaService simularPropostaService) {
         this.criarPropostaService = criarPropostaService;
         this.buscarPropostaService = buscarPropostaService;
         this.aprovarPropostaService = aprovarPropostaService;
         this.recusarPropostaService = recusarPropostaService;
         this.analisarCreditoService = analisarCreditoService;
-        this.calculadoraEmprestimo = calculadoraEmprestimo;
+        this.simularPropostaService = simularPropostaService;
     }
 
     @PostMapping
@@ -92,12 +93,11 @@ public class PropostaController {
 
     @PostMapping("/simular")
     public ResponseEntity<SimulacaoResponse> simular(@Valid @RequestBody SimularPropostaRequest request) {
-        PlanoPagamento plano = calculadoraEmprestimo.calcular(
-                request.getValorSolicitado(),
-                request.getTaxaJurosMensal(),
-                request.getQuantidadeParcelas(),
-                LocalDate.now().plusMonths(1)
+        var dto = new br.com.empresa.emprestimos.proposta.application.dto.SimularPropostaRequest(
+                request.getValorSolicitado(), request.getQuantidadeParcelas(), request.getTaxaJurosMensal()
         );
+
+        PlanoPagamento plano = simularPropostaService.executar(dto);
 
         List<SimulacaoResponse.ItemSimulacao> itens = plano.parcelas().stream()
                 .map(item -> SimulacaoResponse.ItemSimulacao.builder()
@@ -116,7 +116,6 @@ public class PropostaController {
 
         return ResponseEntity.ok(response);
     }
-
     @PostMapping("/{id}/analise")
     public ResponseEntity<AnaliseCreditoResponse> analisar(@PathVariable UUID id, @RequestParam UUID usuarioId,
                                                            @Valid @RequestBody AnalisarCreditoRequest request) {
